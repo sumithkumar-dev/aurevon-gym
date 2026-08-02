@@ -1,9 +1,12 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { membershipPlans } from "@/lib/site-data";
 
 type Status = "idle" | "submitting" | "success";
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
@@ -25,7 +28,7 @@ function validate(data: FormData): FieldErrors {
   return errors;
 }
 
-export function ContactForm() {
+function ContactFormBase({ defaultMessage }: { defaultMessage?: string }) {
   const [status, setStatus] = React.useState<Status>("idle");
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -122,6 +125,7 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
+          defaultValue={defaultMessage}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "message-error" : undefined}
           className={cn(
@@ -149,6 +153,27 @@ export function ContactForm() {
         {status === "submitting" ? "Sending…" : "Send Message"}
       </Button>
     </form>
+  );
+}
+
+function ContactFormWithPlan() {
+  const searchParams = useSearchParams();
+  const planId = searchParams.get("plan");
+  const plan = planId
+    ? membershipPlans.find((p) => p.id === planId)
+    : undefined;
+  const defaultMessage = plan
+    ? `I'm interested in the ${plan.name} membership.`
+    : undefined;
+
+  return <ContactFormBase defaultMessage={defaultMessage} />;
+}
+
+export function ContactForm() {
+  return (
+    <Suspense fallback={<ContactFormBase />}>
+      <ContactFormWithPlan />
+    </Suspense>
   );
 }
 

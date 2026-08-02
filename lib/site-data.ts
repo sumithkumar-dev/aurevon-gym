@@ -5,12 +5,12 @@ export const siteConfig = {
   tagline: "Strength is built.",
   description:
     "A private training studio for people who take their discipline seriously. Considered programming, uncompromising standards, and a space built to match your ambition.",
-  phone: "+1 (555) 014‑2200",
-  email: "studio@aurevon.com",
+  phone: "+91 9876543210",
+  email: "hello@aurevonstudios.com",
   address: {
-    line1: "412 Marlowe Avenue",
-    line2: "Warehouse District",
-    city: "Chicago, IL 60607",
+    line1: "Hunter Road",
+    line2: "Warangal District",
+    city: "Telangana, 506002",
   },
   hours: [
     { days: "Monday — Friday", time: "5:00 AM — 11:00 PM" },
@@ -50,9 +50,10 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "basic",
     name: "Basic",
-    price: "$89",
+    price: "₹7,499",
     period: "/month",
-    description: "For the self-directed athlete who needs a serious space and nothing else.",
+    description:
+      "For the self-directed athlete who needs a serious space and nothing else.",
     features: [
       "Full facility access",
       "Standard operating hours",
@@ -64,9 +65,10 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "gold",
     name: "Gold",
-    price: "$179",
+    price: "₹14,999",
     period: "/month",
-    description: "Guided programming and priority access for members who train with intent.",
+    description:
+      "Guided programming and priority access for members who train with intent.",
     features: [
       "Everything in Basic",
       "Extended hours access",
@@ -80,9 +82,10 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "elite",
     name: "Elite",
-    price: "$349",
+    price: "₹28,999",
     period: "/month",
-    description: "Full access, unlimited coaching, and a studio experience built around you.",
+    description:
+      "Full access, unlimited coaching, and a studio experience built around you.",
     features: [
       "Everything in Gold",
       "Unlimited personal training",
@@ -97,25 +100,25 @@ export const membershipPlans: MembershipPlan[] = [
 export const trainers: Trainer[] = [
   {
     id: "trainer-1",
-    name: "[ TRAINER NAME ]",
+    name: "Vikram Chauhan",
     title: "Head of Strength & Conditioning",
     bio: "Twelve years coaching competitive strength athletes, with a focus on precise movement standards over volume.",
   },
   {
     id: "trainer-2",
-    name: "[ TRAINER NAME ]",
+    name: "Ananya Reddy",
     title: "Performance Coach",
     bio: "Specializes in long-term athletic development and injury-resilient programming for serious lifters.",
   },
   {
     id: "trainer-3",
-    name: "[ TRAINER NAME ]",
+    name: "Rohan Mehta",
     title: "Mobility & Recovery Lead",
     bio: "Bridges rehabilitation and performance training, keeping members moving well for the long term.",
   },
   {
     id: "trainer-4",
-    name: "[ TRAINER NAME ]",
+    name: "Priya Nair",
     title: "Conditioning Specialist",
     bio: "Builds engine and work capacity without sacrificing the strength members come to Aurevon to build.",
   },

@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-data";
+import { getLocalBusinessJsonLd } from "@/lib/structured-data";
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
@@ -39,11 +40,25 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const jsonLd = getLocalBusinessJsonLd();
+
   return (
     <html lang="en" className={`${bebasNeue.variable} ${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[100] focus:bg-background focus:px-4 focus:py-3 focus:text-foreground"
+        >
+          Skip to main content
+        </a>
         <Navbar />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>

@@ -63,8 +63,8 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button variant="primary" size="default">
-            Join Now
+          <Button variant="primary" size="default" asChild>
+            <Link href="/membership">Join Now</Link>
           </Button>
         </div>
 
@@ -129,8 +129,8 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <Button variant="primary" className="mt-8 w-full">
-              Join Now
+            <Button variant="primary" className="mt-8 w-full" asChild>
+              <Link href="/membership">Join Now</Link>
             </Button>
           </nav>
         </div>

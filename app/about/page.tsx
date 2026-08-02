@@ -31,7 +31,7 @@ export default function AboutPage() {
           <Reveal className="lg:col-span-6 lg:col-start-7" delay={100}>
             <span className="eyebrow">Founder</span>
             <h2 className="mt-4 font-display text-3xl uppercase">
-              [ Owner Name ]
+              Rajiv Malhotra
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted">
               After a decade coaching competitive strength athletes, our

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -60,8 +61,9 @@ export function PricingCard({ plan }: { plan: MembershipPlan }) {
         variant={plan.featured ? "primary" : "outline"}
         className="mt-10 w-full"
         aria-label={`Join the ${plan.name} membership plan`}
+        asChild
       >
-        Join Now
+        <Link href={`/contact?plan=${plan.id}`}>Join Now</Link>
       </Button>
     </div>
   );

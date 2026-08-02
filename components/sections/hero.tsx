@@ -44,8 +44,8 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row animate-fade-up [animation-delay:0.5s] opacity-0">
-            <Button variant="primary" size="lg">
-              Join Now
+            <Button variant="primary" size="lg" asChild>
+              <Link href="/membership">Join Now</Link>
             </Button>
             <Button variant="outline" size="lg" asChild>
               <Link href="/membership">Explore Memberships</Link>
