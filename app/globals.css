@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Near-black charcoal background */
+    --background: 20 8% 6%;
+    /* Very dark graphite surfaces */
+    --surface: 20 7% 9%;
+    --surface-raised: 20 7% 12%;
+    /* Warm off-white text */
+    --foreground: 40 20% 94%;
+    --muted: 30 8% 62%;
+    --border: 30 8% 20%;
+    /* Muted bronze accent */
+    --accent: 30 42% 52%;
+    --accent-dim: 30 30% 32%;
+    --accent-bright: 32 50% 64%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "ss01" on, "ss02" on;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-foreground;
+  }
+
+  /* Visible keyboard focus states throughout */
+  :focus-visible {
+    outline: 2px solid hsl(var(--accent));
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .container-editorial {
+    @apply mx-auto max-w-content px-6 md:px-10 lg:px-16;
+  }
+
+  .eyebrow {
+    @apply text-xs md:text-sm uppercase tracking-widest2 text-accent font-body font-medium;
+  }
+}
