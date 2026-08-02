@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { PricingGrid } from "@/components/ui/pricing-card";
 import { FaqSection } from "@/components/sections/faq-section";
+import { Reveal } from "@/components/motion/reveal";
 import { membershipPlans } from "@/lib/site-data";
 
 export const metadata: Metadata = pageMetadata({
@@ -26,10 +27,12 @@ export default function MembershipPage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Good To Know"
-          title="How membership works."
-        />
+        <Reveal>
+          <SectionHeading
+            eyebrow="Good To Know"
+            title="How membership works."
+          />
+        </Reveal>
         <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2">
           {[
             {
@@ -48,15 +51,15 @@ export default function MembershipPage() {
               title: "Freeze when you travel",
               body: "Every plan includes freeze windows for extended travel or injury, up to two months a year.",
             },
-          ].map((item) => (
-            <div key={item.title}>
+          ].map((item, i) => (
+            <Reveal key={item.title} delay={(i % 2) * 90}>
               <h3 className="font-display text-lg uppercase tracking-wide">
                 {item.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
                 {item.body}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>

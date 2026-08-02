@@ -1,20 +1,65 @@
 "use client";
 
 import * as React from "react";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
+type Status = "idle" | "submitting" | "success";
+type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
+
+function validate(data: FormData): FieldErrors {
+  const errors: FieldErrors = {};
+  const name = String(data.get("name") ?? "").trim();
+  const email = String(data.get("email") ?? "").trim();
+  const message = String(data.get("message") ?? "").trim();
+
+  if (!name) errors.name = "Please enter your name.";
+  if (!email) {
+    errors.email = "Please enter your email address.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Enter a valid email address.";
+  }
+  if (!message) errors.message = "Please add a short message.";
+
+  return errors;
+}
+
 export function ContactForm() {
-  const [submitted, setSubmitted] = React.useState(false);
+  const [status, setStatus] = React.useState<Status>("idle");
+  const [errors, setErrors] = React.useState<FieldErrors>({});
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  React.useEffect(() => {
+    if (Object.keys(errors).length === 0) return;
+    formRef.current
+      ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+      ?.focus();
+  }, [errors]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Phase 2: wire to backend API / email service.
-    setSubmitted(true);
+    const data = new FormData(e.currentTarget);
+    const nextErrors = validate(data);
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setStatus("submitting");
+    // Phase 2: wire to backend API / email service. The simulated delay
+    // keeps the interaction feeling real until that's connected.
+    window.setTimeout(() => setStatus("success"), 700);
   }
 
-  if (submitted) {
+  if (status === "success") {
     return (
-      <div className="border border-accent-dim bg-surface p-8" role="status">
+      <div
+        className="border border-accent-dim bg-surface p-8 opacity-0"
+        style={{
+          animation: "fade-up 400ms cubic-bezier(0.16,1,0.3,1) forwards",
+        }}
+        role="status"
+      >
         <p className="font-display text-2xl uppercase">Message sent.</p>
         <p className="mt-3 text-sm text-muted leading-relaxed">
           Thank you for reaching out. A member of the studio team will
@@ -24,11 +69,45 @@ export function ContactForm() {
     );
   }
 
+  const hasErrors = Object.keys(errors).length > 0;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="space-y-6"
+      noValidate
+    >
+      <p
+        role="alert"
+        aria-live="polite"
+        className={cn(
+          "text-sm text-red-400 overflow-hidden transition-all duration-300 ease-editorial",
+          hasErrors
+            ? "max-h-10 translate-y-0 opacity-100"
+            : "max-h-0 -translate-y-1 opacity-0"
+        )}
+      >
+        {hasErrors ? "Please fix the highlighted fields below." : ""}
+      </p>
+
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <Field label="Full name" name="name" type="text" autoComplete="name" required />
-        <Field label="Email address" name="email" type="email" autoComplete="email" required />
+        <Field
+          label="Full name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          required
+          error={errors.name}
+        />
+        <Field
+          label="Email address"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          error={errors.email}
+        />
       </div>
       <Field label="Phone" name="phone" type="tel" autoComplete="tel" />
       <div>
@@ -43,12 +122,31 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
-          className="w-full resize-none border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted/60 focus-visible:border-accent transition-colors"
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={errors.message ? "message-error" : undefined}
+          className={cn(
+            "w-full resize-none border bg-surface px-4 py-3 text-foreground placeholder:text-muted/60 transition-colors hover:border-foreground/40 focus-visible:border-accent",
+            errors.message ? "border-red-500/70" : "border-border"
+          )}
           placeholder="Tell us a bit about your training goals."
         />
+        {errors.message && (
+          <p id="message-error" className="mt-2 text-xs text-red-400">
+            {errors.message}
+          </p>
+        )}
       </div>
-      <Button type="submit" variant="primary" size="lg" className="w-full sm:w-auto">
-        Send Message
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        disabled={status === "submitting"}
+        className="w-full sm:w-auto"
+      >
+        {status === "submitting" && (
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+        )}
+        {status === "submitting" ? "Sending…" : "Send Message"}
       </Button>
     </form>
   );
@@ -60,12 +158,14 @@ function Field({
   type,
   autoComplete,
   required,
+  error,
 }: {
   label: string;
   name: string;
   type: string;
   autoComplete?: string;
   required?: boolean;
+  error?: string;
 }) {
   return (
     <div>
@@ -78,8 +178,18 @@ function Field({
         type={type}
         autoComplete={autoComplete}
         required={required}
-        className="w-full min-h-[3rem] border border-border bg-surface px-4 text-foreground placeholder:text-muted/60 focus-visible:border-accent transition-colors"
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${name}-error` : undefined}
+        className={cn(
+          "w-full min-h-[3rem] border bg-surface px-4 text-foreground placeholder:text-muted/60 transition-colors hover:border-foreground/40 focus-visible:border-accent",
+          error ? "border-red-500/70" : "border-border"
+        )}
       />
+      {error && (
+        <p id={`${name}-error`} className="mt-2 text-xs text-red-400">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

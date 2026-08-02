@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Placeholder } from "@/components/ui/placeholder";
 import { Philosophy } from "@/components/sections/philosophy";
+import { Reveal } from "@/components/motion/reveal";
 
 export const metadata: Metadata = pageMetadata({
   title: "About",
@@ -24,10 +25,10 @@ export default function AboutPage() {
 
       <Section className="border-t border-border">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-5">
+          <Reveal className="lg:col-span-5" y={24}>
             <Placeholder label="[ Owner Image ]" ratio="portrait" />
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7">
+          </Reveal>
+          <Reveal className="lg:col-span-6 lg:col-start-7" delay={100}>
             <span className="eyebrow">Founder</span>
             <h2 className="mt-4 font-display text-3xl uppercase">
               [ Owner Name ]
@@ -44,17 +45,19 @@ export default function AboutPage() {
               deliberately limited. We would rather do right by three
               hundred members than do adequately by three thousand.
             </p>
-          </div>
+          </Reveal>
         </div>
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          align="center"
-          eyebrow="What We Believe"
-          title="Three things we won't compromise on."
-          className="mx-auto"
-        />
+        <Reveal>
+          <SectionHeading
+            align="center"
+            eyebrow="What We Believe"
+            title="Three things we won't compromise on."
+            className="mx-auto"
+          />
+        </Reveal>
         <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-3">
           {[
             {
@@ -69,15 +72,15 @@ export default function AboutPage() {
               title: "Member capacity",
               body: "We cap membership below what the space could technically hold, so the floor never feels like a franchise at 6 p.m.",
             },
-          ].map((item) => (
-            <div key={item.title} className="border-t border-accent-dim pt-6">
+          ].map((item, i) => (
+            <Reveal key={item.title} delay={i * 90} className="border-t border-accent-dim pt-6">
               <h3 className="font-display text-xl uppercase tracking-wide">
                 {item.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-muted">
                 {item.body}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>

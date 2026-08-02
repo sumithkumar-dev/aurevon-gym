@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/page-header";
 import { Section } from "@/components/ui/section";
 import { Placeholder } from "@/components/ui/placeholder";
+import { Reveal } from "@/components/motion/reveal";
 
 export const metadata: Metadata = pageMetadata({
   title: "Gallery",
@@ -31,9 +32,13 @@ export default function GalleryPage() {
       <Section className="pt-0" bleed>
         <div className="container-editorial columns-1 gap-8 sm:columns-2 lg:columns-3">
           {galleryItems.map((item, i) => (
-            <div key={item.label} className="mb-8 break-inside-avoid">
+            <Reveal
+              key={item.label}
+              delay={Math.min(i, 5) * 60}
+              className="mb-8 break-inside-avoid"
+            >
               <Placeholder label={item.label} ratio={i === 0 ? "wide" : item.ratio} />
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>

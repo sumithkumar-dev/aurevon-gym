@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Section } from "@/components/ui/section";
 import { Placeholder } from "@/components/ui/placeholder";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 import { trainers } from "@/lib/site-data";
 
 export const metadata: Metadata = pageMetadata({
@@ -27,10 +28,16 @@ export default function TrainersPage() {
               key={trainer.id}
               className="grid grid-cols-1 gap-10 border-t border-border pt-12 lg:grid-cols-12 lg:items-center"
             >
-              <div className={i % 2 === 1 ? "lg:col-span-4 lg:col-start-9 lg:order-2" : "lg:col-span-4"}>
+              <Reveal
+                className={i % 2 === 1 ? "lg:col-span-4 lg:col-start-9 lg:order-2" : "lg:col-span-4"}
+                y={24}
+              >
                 <Placeholder label="[ Trainer Image ]" ratio="portrait" />
-              </div>
-              <div className={i % 2 === 1 ? "lg:col-span-7 lg:order-1" : "lg:col-span-7 lg:col-start-6"}>
+              </Reveal>
+              <Reveal
+                className={i % 2 === 1 ? "lg:col-span-7 lg:order-1" : "lg:col-span-7 lg:col-start-6"}
+                delay={100}
+              >
                 <span className="eyebrow">{`0${i + 1}`}</span>
                 <h2 className="mt-4 font-display text-3xl md:text-4xl uppercase">
                   {trainer.name}
@@ -41,21 +48,23 @@ export default function TrainersPage() {
                 <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
                   {trainer.bio}
                 </p>
-              </div>
+              </Reveal>
             </div>
           ))}
         </div>
       </Section>
 
       <Section className="border-t border-border text-center">
-        <h2 className="font-display text-display-2 uppercase text-balance max-w-2xl mx-auto">
-          Ready to train with a real coach?
-        </h2>
-        <div className="mt-8 flex justify-center">
-          <Button variant="primary" size="lg">
-            Join Now
-          </Button>
-        </div>
+        <Reveal>
+          <h2 className="font-display text-display-2 uppercase text-balance max-w-2xl mx-auto">
+            Ready to train with a real coach?
+          </h2>
+          <div className="mt-8 flex justify-center">
+            <Button variant="primary" size="lg">
+              Join Now
+            </Button>
+          </div>
+        </Reveal>
       </Section>
     </>
   );

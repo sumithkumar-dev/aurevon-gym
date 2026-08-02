@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { Reveal } from "@/components/motion/reveal";
 import { faqs } from "@/lib/site-data";
 
 export function FaqSection() {
@@ -12,10 +13,12 @@ export function FaqSection() {
     <Section className="border-t border-border">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <SectionHeading eyebrow="FAQ" title="Questions, answered." />
+          <Reveal>
+            <SectionHeading eyebrow="FAQ" title="Questions, answered." />
+          </Reveal>
         </div>
 
-        <div className="lg:col-span-7 lg:col-start-6">
+        <Reveal className="lg:col-span-7 lg:col-start-6" delay={100}>
           <Accordion type="single" collapsible>
             {faqs.map((faq, i) => (
               <AccordionItem key={faq.question} value={`item-${i}`}>
@@ -24,7 +27,7 @@ export function FaqSection() {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

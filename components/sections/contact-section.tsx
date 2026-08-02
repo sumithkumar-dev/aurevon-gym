@@ -1,23 +1,26 @@
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Placeholder } from "@/components/ui/placeholder";
 import { ContactForm } from "@/components/ui/contact-form";
+import { Reveal } from "@/components/motion/reveal";
 import { siteConfig } from "@/lib/site-data";
 
 export function ContactSection() {
   return (
     <Section className="border-t border-border">
-      <SectionHeading
-        eyebrow="Visit The Studio"
-        title="Come see the space."
-        description="Book a walkthrough, ask about membership, or just say hello — we respond to every message personally."
-      />
+      <Reveal>
+        <SectionHeading
+          eyebrow="Visit The Studio"
+          title="Come see the space."
+          description="Book a walkthrough, ask about membership, or just say hello — we respond to every message personally."
+        />
+      </Reveal>
 
       <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-6">
+        <Reveal className="lg:col-span-6">
           <ContactForm />
-        </div>
+        </Reveal>
 
-        <div className="lg:col-span-5 lg:col-start-8 space-y-8">
+        <Reveal className="lg:col-span-5 lg:col-start-8 space-y-8" delay={100}>
           <Placeholder label="[ Embedded Map Placeholder ]" ratio="landscape" />
 
           <div>
@@ -55,7 +58,7 @@ export function ContactSection() {
               </a>
             </p>
           </div>
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

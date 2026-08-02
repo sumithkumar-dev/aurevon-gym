@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/page-header";
 import { TheSpace } from "@/components/sections/the-space";
 import { Section, SectionHeading } from "@/components/ui/section";
+import { Reveal } from "@/components/motion/reveal";
 
 export const metadata: Metadata = pageMetadata({
   title: "Facilities",
@@ -21,10 +22,12 @@ export default function FacilitiesPage() {
       <TheSpace />
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Equipment"
-          title="What's on the floor."
-        />
+        <Reveal>
+          <SectionHeading
+            eyebrow="Equipment"
+            title="What's on the floor."
+          />
+        </Reveal>
         <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {[
             "Competition powerlifting platforms",
@@ -33,10 +36,10 @@ export default function FacilitiesPage() {
             "Selectorized machine range",
             "Dedicated conditioning equipment",
             "Cold plunge & sauna recovery suite",
-          ].map((item) => (
-            <div key={item} className="border-t border-accent-dim pt-4">
+          ].map((item, i) => (
+            <Reveal key={item} delay={(i % 3) * 80} className="border-t border-accent-dim pt-4">
               <p className="text-sm text-foreground/90">{item}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>
