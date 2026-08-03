@@ -1,14 +1,20 @@
-# lib/auth — reserved for Phase 2
+# lib/auth
 
-Not implemented yet. This folder holds:
+Session and route-guard helpers, implemented in Phase 2C.
 
-- `session.ts` — read the current user/session in server components
-- `guards.ts` — role-based access helpers (member vs admin)
+- `session.ts` — `getCurrentUser()` / `getCurrentProfile()`, both wrapped in
+  React's `cache()` so a request that touches them from both a layout and a
+  page only hits Supabase once. Uses `auth.getUser()` (revalidates the JWT),
+  never `auth.getSession()`.
+- `guards.ts` — `requireUser()` / `requireProfile()` / `requireRole(roles)`,
+  called directly from Server Components as a second layer of protection
+  behind the root `middleware.ts`.
 
-A root-level `middleware.ts` will be added at the same time as this
-folder is implemented — not before, since an empty middleware file would
-still run on every request for no benefit. It will handle:
+The root-level `middleware.ts` is the primary defense: it runs before any
+Server Component renders, refreshes the Supabase session cookie (via
+`lib/supabase/middleware.ts`), and handles redirects for:
 
-- Redirecting unauthenticated users away from `app/(app)/*` routes
-- Refreshing the Supabase session cookie (via `lib/supabase/middleware.ts`)
-- Role-based redirects (member vs admin)
+- Unauthenticated users hitting a protected `app/(app)/*` route
+- Authenticated users hitting `/login`, `/forgot-password`, `/reset-password`
+  (redirected to their role's home instead)
+- Staff hitting member-only routes, or members hitting staff-only routes

@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-data";
 import { getLocalBusinessJsonLd } from "@/lib/structured-data";
 
@@ -57,9 +55,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <Navbar />
-        <main id="main-content">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

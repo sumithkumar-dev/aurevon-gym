@@ -50,7 +50,7 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "basic",
     name: "Basic",
-    price: "₹7,499",
+    price: "₹2,999",
     period: "/month",
     description:
       "For the self-directed athlete who needs a serious space and nothing else.",
@@ -65,7 +65,7 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "gold",
     name: "Gold",
-    price: "₹14,999",
+    price: "₹5,999",
     period: "/month",
     description:
       "Guided programming and priority access for members who train with intent.",
@@ -82,7 +82,7 @@ export const membershipPlans: MembershipPlan[] = [
   {
     id: "elite",
     name: "Elite",
-    price: "₹28,999",
+    price: "₹9,999",
     period: "/month",
     description:
       "Full access, unlimited coaching, and a studio experience built around you.",
