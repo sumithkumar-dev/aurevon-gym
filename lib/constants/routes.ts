@@ -2,6 +2,7 @@ import type { Role } from "@/lib/permissions/roles";
 
 export const ROUTES = {
   login: "/login",
+  join: "/join",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
   member: "/member",
@@ -18,6 +19,7 @@ export const ROUTES = {
 // remaining `(app)` routes are protected by default (see middleware.ts).
 export const PUBLIC_APP_ROUTES: string[] = [
   ROUTES.login,
+  ROUTES.join,
   ROUTES.forgotPassword,
   ROUTES.resetPassword,
 ];

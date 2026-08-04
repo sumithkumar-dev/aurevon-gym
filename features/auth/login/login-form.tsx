@@ -61,6 +61,16 @@ export function LoginForm({ redirectTo }: { redirectTo?: string }) {
       <Button type="submit" disabled={isPending} className="w-full">
         {isPending ? "Signing In…" : "Sign In"}
       </Button>
+
+      <p className="text-center text-xs text-muted">
+        New here?{" "}
+        <Link
+          href="/join"
+          className="underline underline-offset-4 hover:text-accent"
+        >
+          Join now
+        </Link>
+      </p>
     </form>
   );
 }
