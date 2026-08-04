@@ -1,7 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
-import { createPlanAction, updatePlanAction, type PlanFormState } from "./actions";
+import {
+  createPlanAction,
+  updatePlanAction,
+  type PlanFormState,
+} from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +14,7 @@ import type { Plan } from "@/lib/supabase/queries/plans";
 
 const initialState: PlanFormState = null;
 
-function featuresToLines(features: Plan["features"]): string {
+function featuresToLines(features: Plan["features"] | undefined): string {
   return Array.isArray(features) ? features.join("\n") : "";
 }
 
