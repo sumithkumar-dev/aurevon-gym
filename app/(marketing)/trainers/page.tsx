@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/page-header";
 import { Section } from "@/components/ui/section";
@@ -68,8 +69,8 @@ export default function TrainersPage() {
             Ready to train with a real coach?
           </h2>
           <div className="mt-8 flex justify-center">
-            <Button variant="primary" size="lg">
-              Join Now
+            <Button variant="primary" size="lg" asChild>
+              <Link href="/join">Join Now</Link>
             </Button>
           </div>
         </Reveal>

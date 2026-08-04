@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 export default async function PaymentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ justPaid?: string }>;
+  searchParams: Promise<{ justPaid?: string; plan?: string }>;
 }) {
   const profile = await requireRole(["member"]);
-  const { justPaid } = await searchParams;
+  const { justPaid, plan: highlightSlug } = await searchParams;
 
   const [membership, payments, invoices] = await Promise.all([
     getCurrentMembership(profile.id),
@@ -66,6 +66,7 @@ export default async function PaymentsPage({
               plans={plans}
               memberName={profile.full_name}
               memberEmail={profile.email}
+              highlightSlug={highlightSlug}
             />
           </div>
         </div>

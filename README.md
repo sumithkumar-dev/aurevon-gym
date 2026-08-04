@@ -154,10 +154,14 @@ Not yet built:
 - Resend transactional email (2H)
 - Trainer authentication — deferred past Phase 2 by design; `trainers` is
   a content table, not an account
-- Self-service registration — not planned at all; accounts are created
-  only after a verified payment or by staff for a walk-in member
+
+Public self-signup exists (`/join`, `features/auth/signup/`), but only as
+the front door to a paid signup: it creates the account and immediately
+sends the member to `/payments` to complete a verified Razorpay payment —
+there's still no way to get a member account without paying or being
+added by staff. Pricing card "Join Now" buttons on `/membership` and the
+homepage now link to `/join?plan=<slug>` instead of the contact form.
 
 The contact form currently only sets local UI state on submit — wire its
 `handleSubmit` in `components/ui/contact-form.tsx` to a real endpoint
-when the backend exists. Pricing card "Join Now" buttons are inert by
-design per the brief; wiring them to Razorpay checkout is Phase 2G.
+when the backend exists.

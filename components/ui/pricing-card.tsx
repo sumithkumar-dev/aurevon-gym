@@ -63,7 +63,7 @@ export function PricingCard({ plan }: { plan: MembershipPlan }) {
         aria-label={`Join the ${plan.name} membership plan`}
         asChild
       >
-        <Link href={`/contact?plan=${plan.id}`}>Join Now</Link>
+        <Link href={`/join?plan=${plan.id}`}>Join Now</Link>
       </Button>
     </div>
   );
