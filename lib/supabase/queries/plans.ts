@@ -53,3 +53,19 @@ export const getPlanById = cache(async (id: string): Promise<Plan | null> => {
   }
   return data;
 });
+
+/** Looks up a single active plan by its slug (e.g. `?plan=gold` on /join). */
+export const getPlanBySlug = cache(async (slug: string): Promise<Plan | null> => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("membership_plans")
+    .select("*")
+    .eq("slug", slug)
+    .eq("is_active", true)
+    .maybeSingle();
+
+  if (error) {
+    return null;
+  }
+  return data;
+});
