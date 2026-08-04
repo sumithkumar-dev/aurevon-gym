@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { requireRole } from "@/lib/auth/guards";
+import { getCurrentMembership } from "@/lib/supabase/queries/memberships";
+import { MembershipStatusCard } from "@/features/member/dashboard/membership-status-card";
+import { QuickLinks } from "@/features/member/dashboard/quick-links";
 
 export const metadata: Metadata = {
   title: "Member Dashboard",
@@ -7,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function MemberPage() {
   const profile = await requireRole(["member"]);
+  const membership = await getCurrentMembership(profile.id);
 
   return (
     <div className="container-editorial py-16">
@@ -15,10 +19,14 @@ export default async function MemberPage() {
         Welcome, {profile.full_name || "Member"}
       </h1>
       <p className="mt-4 max-w-xl text-muted">
-        Membership status, expiry date, payment history, invoices, profile,
-        and announcements land here in Phase 2E. This page confirms sign-in,
-        session persistence, and role-based routing are working end to end.
+        Your membership status and quick links to your account, all in one
+        place.
       </p>
+
+      <div className="mt-10 flex flex-col gap-10">
+        <MembershipStatusCard membership={membership} />
+        <QuickLinks />
+      </div>
     </div>
   );
 }

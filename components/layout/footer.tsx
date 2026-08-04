@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Instagram, MessageCircle } from "lucide-react";
 import { siteConfig, footerNav } from "@/lib/site-data";
 
 export function Footer() {
@@ -27,13 +28,33 @@ export function Footer() {
               <li>{siteConfig.address.line2}</li>
               <li>{siteConfig.address.city}</li>
               <li className="pt-2">
-                <a href={`tel:${siteConfig.phone}`} className="hover:text-accent transition-colors">
+                <a href={siteConfig.phoneHref} className="hover:text-accent transition-colors">
                   {siteConfig.phone}
                 </a>
               </li>
               <li>
                 <a href={`mailto:${siteConfig.email}`} className="hover:text-accent transition-colors">
                   {siteConfig.email}
+                </a>
+              </li>
+              <li className="flex items-center gap-5 pt-2">
+                <a
+                  href={siteConfig.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Message Aurevon Studios on WhatsApp"
+                  className="text-muted transition-colors hover:text-accent"
+                >
+                  <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                </a>
+                <a
+                  href={siteConfig.instagramHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Aurevon Studios on Instagram"
+                  className="text-muted transition-colors hover:text-accent"
+                >
+                  <Instagram className="h-5 w-5" aria-hidden="true" />
                 </a>
               </li>
             </ul>

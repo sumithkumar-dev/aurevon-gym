@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { pageMetadata } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/page-header";
 import { Section } from "@/components/ui/section";
-import { Placeholder } from "@/components/ui/placeholder";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import { trainers } from "@/lib/site-data";
@@ -32,7 +32,15 @@ export default function TrainersPage() {
                 className={i % 2 === 1 ? "lg:col-span-4 lg:col-start-9 lg:order-2" : "lg:col-span-4"}
                 y={24}
               >
-                <Placeholder label="[ Trainer Image ]" ratio="portrait" />
+                <div className="relative aspect-[3/4] w-full overflow-hidden border border-border">
+                  <Image
+                    src={trainer.image.src}
+                    alt={trainer.image.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, 90vw"
+                    className="object-cover"
+                  />
+                </div>
               </Reveal>
               <Reveal
                 className={i % 2 === 1 ? "lg:col-span-7 lg:order-1" : "lg:col-span-7 lg:col-start-6"}

@@ -1,5 +1,5 @@
+import { Instagram, MessageCircle } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { Placeholder } from "@/components/ui/placeholder";
 import { ContactForm } from "@/components/ui/contact-form";
 import { Reveal } from "@/components/motion/reveal";
 import { siteConfig } from "@/lib/site-data";
@@ -21,7 +21,15 @@ export function ContactSection() {
         </Reveal>
 
         <Reveal className="lg:col-span-5 lg:col-start-8 space-y-8" delay={100}>
-          <Placeholder label="[ Embedded Map Placeholder ]" ratio="landscape" />
+          <div className="relative aspect-[4/3] w-full overflow-hidden border border-border">
+            <iframe
+              src={siteConfig.mapEmbedSrc}
+              title="Aurevon Studios location — Hanamkonda, Telangana"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0"
+            />
+          </div>
 
           <div>
             <span className="eyebrow">Address</span>
@@ -49,7 +57,7 @@ export function ContactSection() {
           <div>
             <span className="eyebrow">Reach Us</span>
             <p className="mt-3 text-sm text-muted">
-              <a href={`tel:${siteConfig.phone}`} className="hover:text-accent transition-colors">
+              <a href={siteConfig.phoneHref} className="hover:text-accent transition-colors">
                 {siteConfig.phone}
               </a>
               <br />
@@ -57,6 +65,26 @@ export function ContactSection() {
                 {siteConfig.email}
               </a>
             </p>
+            <div className="mt-4 flex items-center gap-5">
+              <a
+                href={siteConfig.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Message Aurevon Studios on WhatsApp"
+                className="text-muted transition-colors hover:text-accent"
+              >
+                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+              </a>
+              <a
+                href={siteConfig.instagramHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Aurevon Studios on Instagram"
+                className="text-muted transition-colors hover:text-accent"
+              >
+                <Instagram className="h-5 w-5" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </Reveal>
       </div>

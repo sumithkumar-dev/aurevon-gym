@@ -8,11 +8,17 @@ export type MembershipPlan = {
   featured?: boolean;
 };
 
+export type SiteImage = {
+  src: string;
+  alt: string;
+};
+
 export type Trainer = {
   id: string;
   name: string;
   title: string;
   bio: string;
+  image: SiteImage;
 };
 
 export type Testimonial = {
@@ -20,4 +26,5 @@ export type Testimonial = {
   quote: string;
   name: string;
   detail: string;
+  image: SiteImage;
 };

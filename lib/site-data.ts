@@ -1,4 +1,8 @@
 import type { MembershipPlan, Trainer, Testimonial } from "@/types/site";
+import { trainerImages, transformationImages } from "@/lib/site-images";
+
+const whatsappNumber = "919876543210";
+const whatsappMessage = "Hi, I'm interested in your gym memberships.";
 
 export const siteConfig = {
   name: "Aurevon",
@@ -6,6 +10,9 @@ export const siteConfig = {
   description:
     "A private training studio for people who take their discipline seriously. Considered programming, uncompromising standards, and a space built to match your ambition.",
   phone: "+91 9876543210",
+  phoneHref: "tel:+919876543210",
+  whatsappHref: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`,
+  instagramHref: "https://instagram.com",
   email: "hello@aurevonstudios.com",
   address: {
     line1: "Hunter Road",
@@ -17,6 +24,8 @@ export const siteConfig = {
     { days: "Saturday", time: "6:00 AM — 9:00 PM" },
     { days: "Sunday", time: "7:00 AM — 6:00 PM" },
   ],
+  mapEmbedSrc:
+    "https://www.google.com/maps?q=Hanamkonda,Telangana,India&output=embed",
 };
 
 export const mainNav = [
@@ -103,24 +112,14 @@ export const trainers: Trainer[] = [
     name: "Vikram Chauhan",
     title: "Head of Strength & Conditioning",
     bio: "Twelve years coaching competitive strength athletes, with a focus on precise movement standards over volume.",
+    image: trainerImages.male,
   },
   {
     id: "trainer-2",
     name: "Ananya Reddy",
     title: "Performance Coach",
     bio: "Specializes in long-term athletic development and injury-resilient programming for serious lifters.",
-  },
-  {
-    id: "trainer-3",
-    name: "Rohan Mehta",
-    title: "Mobility & Recovery Lead",
-    bio: "Bridges rehabilitation and performance training, keeping members moving well for the long term.",
-  },
-  {
-    id: "trainer-4",
-    name: "Priya Nair",
-    title: "Conditioning Specialist",
-    bio: "Builds engine and work capacity without sacrificing the strength members come to Aurevon to build.",
+    image: trainerImages.female,
   },
 ];
 
@@ -131,6 +130,7 @@ export const testimonials: Testimonial[] = [
       "I've trained at a dozen gyms. This is the first one that treated programming like a craft instead of a checklist.",
     name: "Member since 2023",
     detail: "Elite Membership",
+    image: transformationImages[0],
   },
   {
     id: "t2",
@@ -138,6 +138,7 @@ export const testimonials: Testimonial[] = [
       "The coaching is direct, the space is serious, and nobody is trying to sell me a smoothie on the way out.",
     name: "Member since 2022",
     detail: "Gold Membership",
+    image: transformationImages[1],
   },
   {
     id: "t3",
@@ -145,6 +146,7 @@ export const testimonials: Testimonial[] = [
       "Eighteen months in and my numbers still climb every quarter. That's the whole pitch, really.",
     name: "Member since 2021",
     detail: "Elite Membership",
+    image: transformationImages[2],
   },
 ];
 

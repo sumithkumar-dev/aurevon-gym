@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { requireRole } from "@/lib/auth/guards";
 import { STAFF_ROLES, ROLE_LABELS } from "@/lib/permissions/roles";
+import { getMemberCount } from "@/lib/supabase/queries/members";
+import { getMembershipCounts } from "@/lib/supabase/queries/memberships";
+import { getRevenueSummary } from "@/lib/supabase/queries/payments";
+import { formatCurrency } from "@/features/memberships/status";
+import { StatCard } from "@/features/admin/dashboard/stat-card";
+import { QuickLinks } from "@/features/admin/dashboard/quick-links";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -8,6 +14,11 @@ export const metadata: Metadata = {
 
 export default async function AdminPage() {
   const profile = await requireRole(STAFF_ROLES);
+  const [memberCount, membershipCounts, revenue] = await Promise.all([
+    getMemberCount(),
+    getMembershipCounts(),
+    getRevenueSummary(),
+  ]);
 
   return (
     <div className="container-editorial py-16">
@@ -16,11 +27,34 @@ export default async function AdminPage() {
         Welcome, {profile.full_name || ROLE_LABELS[profile.role]}
       </h1>
       <p className="mt-4 max-w-xl text-muted">
-        Members, plans, payments, announcements, website content, settings,
-        roles, and reports land here in Phase 2F. This page confirms
-        staff-only routing is correctly enforced for the{" "}
-        {ROLE_LABELS[profile.role]} role.
+        A snapshot of the studio, and quick links to members, plans, and
+        payments.
       </p>
+
+      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Members" value={String(memberCount)} />
+        <StatCard
+          label="Active Memberships"
+          value={String(membershipCounts.active)}
+          hint={
+            membershipCounts.pending > 0
+              ? `${membershipCounts.pending} pending payment`
+              : undefined
+          }
+        />
+        <StatCard
+          label="Revenue This Month"
+          value={formatCurrency(revenue.thisMonthPaise)}
+        />
+        <StatCard
+          label="Revenue All Time"
+          value={formatCurrency(revenue.allTimePaise)}
+        />
+      </div>
+
+      <div className="mt-10">
+        <QuickLinks />
+      </div>
     </div>
   );
 }

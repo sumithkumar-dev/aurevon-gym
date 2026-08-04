@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { Placeholder } from "@/components/ui/placeholder";
 import { Reveal } from "@/components/motion/reveal";
 import { testimonials } from "@/lib/site-data";
 
@@ -24,7 +24,15 @@ export function MemberResults() {
             delay={i * 90}
             className={i === 1 ? "lg:mt-12" : undefined}
           >
-            <Placeholder label="[ Member Transformation ]" ratio="portrait" />
+            <div className="relative aspect-[3/4] w-full overflow-hidden border border-border">
+              <Image
+                src={t.image.src}
+                alt={t.image.alt}
+                fill
+                sizes="(min-width: 1024px) 33vw, 90vw"
+                className="object-cover"
+              />
+            </div>
             <blockquote className="mt-6 text-lg leading-snug text-balance">
               &ldquo;{t.quote}&rdquo;
             </blockquote>
