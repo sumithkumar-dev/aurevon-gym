@@ -62,7 +62,16 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex lg:items-center lg:gap-6">
+          <Link
+            href="/login"
+            className={cn(
+              "text-sm uppercase tracking-wide transition-colors duration-300 hover:text-accent active:text-accent-bright",
+              pathname === "/login" ? "text-accent" : "text-foreground/85"
+            )}
+          >
+            Sign In
+          </Link>
           <Button variant="primary" size="default" asChild>
             <Link href="/membership">Join Now</Link>
           </Button>
@@ -132,6 +141,12 @@ export function Navbar() {
             <Button variant="primary" className="mt-8 w-full" asChild>
               <Link href="/membership">Join Now</Link>
             </Button>
+            <Link
+              href="/login"
+              className="mt-6 block text-center text-sm uppercase tracking-wide text-foreground/85 transition-colors duration-200 hover:text-accent active:text-accent-bright min-h-[44px] flex items-center justify-center"
+            >
+              Sign In
+            </Link>
           </nav>
         </div>
       </div>

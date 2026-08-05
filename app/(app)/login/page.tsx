@@ -6,7 +6,7 @@ import { getCurrentProfile } from "@/lib/auth/session";
 import { roleHomeRoute } from "@/lib/constants/routes";
 
 export const metadata: Metadata = {
-  title: "Member Login",
+  title: "Sign In",
 };
 
 export default async function LoginPage({
@@ -23,9 +23,9 @@ export default async function LoginPage({
 
   return (
     <AuthCard
-      eyebrow="Member Access"
+      eyebrow="Studio Access"
       title="Sign In"
-      description="Enter your credentials to access your membership."
+      description="Members and staff both sign in here — you'll land in the right place for your account."
     >
       <LoginForm redirectTo={redirectTo} />
     </AuthCard>

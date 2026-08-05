@@ -32,10 +32,13 @@ export async function signInAction(
 
   const profile = await getProfileById(data.user.id);
   const redirectTo = formData.get("redirectTo");
+  // Only accept same-origin, path-relative redirects. `//host` is
+  // protocol-relative and browsers resolve it to an external origin, so it
+  // must be rejected even though it passes a naive startsWith("/") check.
+  const isSafeRedirect =
+    typeof redirectTo === "string" &&
+    redirectTo.startsWith("/") &&
+    !redirectTo.startsWith("//");
 
-  redirect(
-    typeof redirectTo === "string" && redirectTo.startsWith("/")
-      ? redirectTo
-      : roleHomeRoute(profile?.role ?? "member")
-  );
+  redirect(isSafeRedirect ? redirectTo : roleHomeRoute(profile?.role ?? "member"));
 }

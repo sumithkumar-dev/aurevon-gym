@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { pageMetadata } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/page-header";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { Placeholder } from "@/components/ui/placeholder";
 import { Philosophy } from "@/components/sections/philosophy";
 import { Reveal } from "@/components/motion/reveal";
+import { spaceImages } from "@/lib/site-images";
 
 export const metadata: Metadata = pageMetadata({
   title: "About",
@@ -26,7 +27,15 @@ export default function AboutPage() {
       <Section className="border-t border-border">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:items-center">
           <Reveal className="lg:col-span-5" y={24}>
-            <Placeholder label="[ Owner Image ]" ratio="portrait" />
+            <div className="relative aspect-[3/4] w-full overflow-hidden border border-border">
+              <Image
+                src={spaceImages.coachingSession.src}
+                alt={spaceImages.coachingSession.alt}
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
           </Reveal>
           <Reveal className="lg:col-span-6 lg:col-start-7" delay={100}>
             <span className="eyebrow">Founder</span>

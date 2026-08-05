@@ -65,7 +65,15 @@ export function Footer() {
           <p className="text-xs text-muted">
             © {year} {siteConfig.name} Studios. All rights reserved.
           </p>
-          <ul className="flex gap-6">
+          <ul className="flex flex-wrap gap-6">
+            <li>
+              <Link
+                href="/login"
+                className="text-xs uppercase tracking-wide text-muted hover:text-accent transition-colors"
+              >
+                Sign In
+              </Link>
+            </li>
             {footerNav.legal.map((item) => (
               <li key={item.href}>
                 <Link

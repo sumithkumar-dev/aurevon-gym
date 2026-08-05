@@ -5,15 +5,19 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { PricingGrid } from "@/components/ui/pricing-card";
 import { FaqSection } from "@/components/sections/faq-section";
 import { Reveal } from "@/components/motion/reveal";
-import { membershipPlans } from "@/lib/site-data";
+import { getActivePlans } from "@/lib/supabase/queries/plans";
+import { toDisplayPlan } from "@/lib/plan-display";
 
 export const metadata: Metadata = pageMetadata({
   title: "Membership Plans",
   description:
-    "Three membership tiers at Aurevon Studios — Basic, Gold, and Elite. Full facility access at every level.",
+    "Membership tiers at Aurevon Studios, each with full facility access.",
 });
 
-export default function MembershipPage() {
+export default async function MembershipPage() {
+  const plans = await getActivePlans();
+  const displayPlans = plans.map(toDisplayPlan);
+
   return (
     <>
       <PageHeader
@@ -23,7 +27,16 @@ export default function MembershipPage() {
       />
 
       <Section className="pt-0">
-        <PricingGrid plans={membershipPlans} />
+        {displayPlans.length > 0 ? (
+          <PricingGrid plans={displayPlans} />
+        ) : (
+          <div className="border border-border bg-surface p-8 md:p-10">
+            <p className="text-sm text-muted">
+              Plans aren&rsquo;t available right now. Please check back soon
+              or get in touch.
+            </p>
+          </div>
+        )}
       </Section>
 
       <Section className="border-t border-border">

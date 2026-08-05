@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function ForgotPasswordPage() {
   return (
     <AuthCard
-      eyebrow="Member Access"
+      eyebrow="Studio Access"
       title="Forgot Password"
       description="Enter the email on your account and we'll send you a reset link."
     >

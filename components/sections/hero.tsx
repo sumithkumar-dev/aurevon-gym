@@ -1,28 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { spaceImages } from "@/lib/site-images";
 
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden bg-background flex items-end">
-      {/*
-        Reserved cinematic area. In Phase 2, replace this container's
-        contents with a <video> or WebGL canvas — the layout, gradient
-        scrim, and text positioning are designed to remain unchanged.
-      */}
       <div className="absolute inset-0" aria-hidden="true">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, hsl(var(--surface)) 0px, hsl(var(--surface)) 1px, transparent 1px, transparent 16px)",
-          }}
+        <Image
+          src={spaceImages.mainFloor.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-body text-xs uppercase tracking-widest2 text-muted">
-            [ Hero Cinematic Placeholder ]
-          </span>
-        </div>
       </div>
 
       <div className="container-editorial relative z-10 pb-20 pt-40 md:pb-28">
