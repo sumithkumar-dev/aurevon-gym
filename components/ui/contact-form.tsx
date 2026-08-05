@@ -85,7 +85,7 @@ function ContactFormBase({ defaultMessage }: { defaultMessage?: string }) {
         role="alert"
         aria-live="polite"
         className={cn(
-          "text-sm text-red-400 overflow-hidden transition-all duration-300 ease-editorial",
+          "text-sm text-destructive overflow-hidden transition-all duration-300 ease-editorial",
           hasErrors
             ? "max-h-10 translate-y-0 opacity-100"
             : "max-h-0 -translate-y-1 opacity-0"
@@ -130,12 +130,12 @@ function ContactFormBase({ defaultMessage }: { defaultMessage?: string }) {
           aria-describedby={errors.message ? "message-error" : undefined}
           className={cn(
             "w-full resize-none border bg-surface px-4 py-3 text-foreground placeholder:text-muted/60 transition-colors hover:border-foreground/40 focus-visible:border-accent",
-            errors.message ? "border-red-500/70" : "border-border"
+            errors.message ? "border-destructive-strong/70" : "border-border"
           )}
           placeholder="Tell us a bit about your training goals."
         />
         {errors.message && (
-          <p id="message-error" className="mt-2 text-xs text-red-400">
+          <p id="message-error" className="mt-2 text-xs text-destructive">
             {errors.message}
           </p>
         )}
@@ -207,11 +207,11 @@ function Field({
         aria-describedby={error ? `${name}-error` : undefined}
         className={cn(
           "w-full min-h-[3rem] border bg-surface px-4 text-foreground placeholder:text-muted/60 transition-colors hover:border-foreground/40 focus-visible:border-accent",
-          error ? "border-red-500/70" : "border-border"
+          error ? "border-destructive-strong/70" : "border-border"
         )}
       />
       {error && (
-        <p id={`${name}-error`} className="mt-2 text-xs text-red-400">
+        <p id={`${name}-error`} className="mt-2 text-xs text-destructive">
           {error}
         </p>
       )}

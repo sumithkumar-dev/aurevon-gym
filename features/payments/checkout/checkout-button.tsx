@@ -6,8 +6,16 @@ import { Button } from "@/components/ui/button";
 
 declare global {
   interface Window {
-    Razorpay?: new (options: RazorpayCheckoutOptions) => { open(): void };
+    Razorpay?: new (options: RazorpayCheckoutOptions) => RazorpayCheckoutInstance;
   }
+}
+
+interface RazorpayCheckoutInstance {
+  open(): void;
+  on(
+    event: "payment.failed",
+    handler: (response: { error?: { description?: string } }) => void
+  ): void;
 }
 
 interface RazorpayCheckoutOptions {
@@ -60,10 +68,12 @@ export function CheckoutButton({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   async function handleCheckout() {
     setIsLoading(true);
     setError(null);
+    setNotice(null);
 
     try {
       const response = await fetch("/api/razorpay/checkout", {
@@ -104,9 +114,31 @@ export function CheckoutButton({
           router.push(`${window.location.pathname}?justPaid=1`);
         },
         modal: {
-          ondismiss: () => setIsLoading(false),
+          ondismiss: () => {
+            setIsLoading(false);
+            // Neutral, not an error — the member closed the window
+            // themselves. Razorpay's own in-modal failure UI already
+            // covers a declined/failed attempt; this only covers a
+            // deliberate close with no attempt completed.
+            setNotice("Checkout was cancelled. No payment was made.");
+          },
         },
       });
+
+      checkout.on("payment.failed", (response) => {
+        // The signature-verified webhook remains the source of truth for
+        // the payment record — this is purely an immediate, friendlier
+        // echo of what Razorpay's own modal already showed, since the
+        // modal closes right after and would otherwise leave the member
+        // on a blank page with no explanation.
+        setIsLoading(false);
+        setNotice(null);
+        setError(
+          response.error?.description ??
+            "The payment didn't go through. You can try again."
+        );
+      });
+
       checkout.open();
     } catch {
       setError("Something went wrong. Please try again.");
@@ -120,8 +152,13 @@ export function CheckoutButton({
         {isLoading ? "Starting checkout…" : `Pay for ${planName}`}
       </Button>
       {error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-destructive">
           {error}
+        </p>
+      )}
+      {!error && notice && (
+        <p role="status" className="text-sm text-muted">
+          {notice}
         </p>
       )}
     </div>

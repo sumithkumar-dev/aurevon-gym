@@ -6,14 +6,22 @@ import { getAllPayments } from "@/lib/supabase/queries/payments";
 import { PaymentsTable } from "@/features/admin/payments/payments-table";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants/routes";
+import { ADMIN_PAGE_SIZE, parsePageParam } from "@/lib/constants/pagination";
 
 export const metadata: Metadata = {
   title: "Payments",
 };
 
-export default async function AdminPaymentsPage() {
+export default async function AdminPaymentsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   await requireRole(STAFF_ROLES);
-  const payments = await getAllPayments();
+  const { page: pageParam } = await searchParams;
+  const page = parsePageParam(pageParam);
+  const { payments, totalCount } = await getAllPayments(page);
+  const totalPages = Math.max(1, Math.ceil(totalCount / ADMIN_PAGE_SIZE));
 
   return (
     <div className="container-editorial py-16">
@@ -30,7 +38,11 @@ export default async function AdminPaymentsPage() {
       </div>
 
       <div className="mt-10">
-        <PaymentsTable payments={payments} />
+        <PaymentsTable
+          payments={payments}
+          currentPage={page}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

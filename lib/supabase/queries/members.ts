@@ -2,21 +2,31 @@ import "server-only";
 import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile } from "@/lib/supabase/queries/profiles";
+import { ADMIN_PAGE_SIZE } from "@/lib/constants/pagination";
 
 export type MemberProfile = Profile;
 
 /**
- * All member-role profiles, optionally filtered by a name/email search
- * term. Staff-only in practice — RLS (`profiles_select_own_or_staff`) is
- * what actually enforces that only owner/manager/receptionist callers see
- * rows besides their own.
+ * One page of member-role profiles, optionally filtered by a name/email
+ * search term, plus the total count matching that filter (for computing
+ * how many pages there are). Staff-only in practice — RLS
+ * (`profiles_select_own_or_staff`) is what actually enforces that only
+ * owner/manager/receptionist callers see rows besides their own.
+ *
+ * `page` is 1-indexed. Paginated with `.range()` rather than fetching
+ * every member — an admin's member list has no natural upper bound, and
+ * neither the query nor an unbounded `<table>` render scale to a studio
+ * with a few thousand members.
  */
 export const getMembers = cache(
-  async (search?: string): Promise<MemberProfile[]> => {
+  async (
+    search?: string,
+    page = 1
+  ): Promise<{ members: MemberProfile[]; totalCount: number }> => {
     const supabase = await createClient();
     let query = supabase
       .from("profiles")
-      .select("*")
+      .select("*", { count: "exact" })
       .eq("role", "member")
       .order("full_name", { ascending: true });
 
@@ -30,7 +40,42 @@ export const getMembers = cache(
       );
     }
 
-    const { data, error } = await query;
+    const from = (page - 1) * ADMIN_PAGE_SIZE;
+    const to = from + ADMIN_PAGE_SIZE - 1;
+
+    const { data, error, count } = await query.range(from, to);
+    if (error) {
+      return { members: [], totalCount: 0 };
+    }
+    return { members: data, totalCount: count ?? 0 };
+  }
+);
+
+/**
+ * A lightweight, capped list of members for the "Record Payment" `<select>`
+ * (id/name/email only, not the full profile). Deliberately separate from
+ * the paginated `getMembers()` above — a payment-recording dropdown needs
+ * to search across the whole member base, not one page of it, so it
+ * can't reuse the same pagination.
+ *
+ * The cap is a stopgap, not a real fix: a native `<select>` with hundreds
+ * of members is already a poor picker experience well before it becomes
+ * a query-performance problem. The actual fix is a searchable combobox
+ * that queries as the staff member types (same `.ilike()` pattern
+ * `getMembers()` already uses) — flagged in the audit report as a
+ * follow-up rather than built here, since it's a UI pattern change, not
+ * a fix to something broken.
+ */
+export const getAllMembersForSelect = cache(
+  async (): Promise<Pick<MemberProfile, "id" | "full_name" | "email">[]> => {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, full_name, email")
+      .eq("role", "member")
+      .order("full_name", { ascending: true })
+      .limit(500);
+
     if (error) {
       return [];
     }

@@ -94,12 +94,12 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       </div>
 
       {state?.error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-destructive">
           {state.error}
         </p>
       )}
       {state?.success && (
-        <p role="status" className="text-sm text-emerald-400">
+        <p role="status" className="text-sm text-success">
           Profile updated.
         </p>
       )}

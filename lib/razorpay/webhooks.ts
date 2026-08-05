@@ -56,8 +56,22 @@ export function verifyWebhookSignature(
  * or a staff action can write them.
  *
  * Idempotent: Razorpay retries a webhook until it gets a 2xx, so a
- * payment already in its target status is treated as a no-op success,
- * not re-processed.
+ * payment already `captured` is treated as a no-op success, not
+ * re-processed. A prior `failed` status is deliberately NOT treated as
+ * terminal here — Razorpay allows multiple payment attempts against the
+ * same order, so a member whose first attempt failed and who
+ * successfully retried needs their `payment.captured` event to still go
+ * through. (`mark_payment_failed` similarly refuses to downgrade a
+ * payment that's already `captured`, guarding the other ordering.)
+ *
+ * The actual reads/writes for each outcome happen inside
+ * `activate_membership_from_payment()` / `mark_payment_failed()` — two
+ * SECURITY DEFINER Postgres functions (see
+ * `supabase/migrations/20260805000001_payment_atomicity_and_invoices.sql`)
+ * that row-lock the payment and do their multi-table writes (membership +
+ * payment + invoice, for a capture) as a single transaction, so a
+ * delivery that fails partway through can never leave the data
+ * half-updated or get double-applied by a retry.
  */
 export async function handleWebhookEvent(
   event: RazorpayWebhookEvent
@@ -78,7 +92,7 @@ export async function handleWebhookEvent(
   const admin = createAdminClient();
   const { data: paymentRow, error: fetchError } = await admin
     .from("payments")
-    .select("id, membership_id, status")
+    .select("id, status")
     .eq("razorpay_order_id", payment.order_id)
     .maybeSingle();
 
@@ -91,93 +105,51 @@ export async function handleWebhookEvent(
     return;
   }
 
-  if (paymentRow.status === "captured" || paymentRow.status === "failed") {
-    // Already processed — a replayed delivery, not an error.
-    return;
-  }
-
   if (event.event === "payment.failed") {
-    const { error: updateError } = await admin
-      .from("payments")
-      .update({ status: "failed", razorpay_payment_id: payment.id })
-      .eq("id", paymentRow.id);
+    const { data, error } = await admin.rpc("mark_payment_failed", {
+      p_payment_id: paymentRow.id,
+      p_razorpay_payment_id: payment.id,
+    });
 
-    if (updateError) {
-      console.error("[razorpay:webhook] failed-payment update failed", {
+    if (error) {
+      console.error("[razorpay:webhook] mark_payment_failed failed", {
         paymentId: paymentRow.id,
-        error: updateError.message,
+        error: error.message,
       });
       return;
     }
 
     console.info("[razorpay:webhook] payment marked failed", {
       paymentId: paymentRow.id,
+      updated: data?.[0]?.updated ?? false,
     });
     return;
   }
 
-  // payment.captured — activate the membership.
-  const { data: membership, error: membershipFetchError } = await admin
-    .from("memberships")
-    .select("id, plan_id")
-    .eq("id", paymentRow.membership_id)
-    .maybeSingle();
-
-  if (membershipFetchError || !membership) {
-    console.error("[razorpay:webhook] membership not found for payment", {
-      paymentId: paymentRow.id,
-      membershipId: paymentRow.membership_id,
-    });
-    return;
-  }
-
-  const { data: plan, error: planFetchError } = await admin
-    .from("membership_plans")
-    .select("duration_days")
-    .eq("id", membership.plan_id)
-    .maybeSingle();
-
-  if (planFetchError || !plan) {
-    console.error("[razorpay:webhook] plan not found for membership", {
-      membershipId: membership.id,
-    });
-    return;
-  }
-
-  const today = new Date();
-  const startDate = today.toISOString().slice(0, 10);
-  const endDateObj = new Date(today);
-  endDateObj.setDate(endDateObj.getDate() + plan.duration_days);
-  const endDate = endDateObj.toISOString().slice(0, 10);
-
-  const { error: membershipUpdateError } = await admin
-    .from("memberships")
-    .update({ status: "active", start_date: startDate, end_date: endDate })
-    .eq("id", membership.id);
-
-  if (membershipUpdateError) {
-    console.error("[razorpay:webhook] membership activation failed", {
-      membershipId: membership.id,
-      error: membershipUpdateError.message,
-    });
-    return;
-  }
-
-  const { error: paymentUpdateError } = await admin
-    .from("payments")
-    .update({ status: "captured", razorpay_payment_id: payment.id })
-    .eq("id", paymentRow.id);
-
-  if (paymentUpdateError) {
-    console.error("[razorpay:webhook] payment-captured update failed", {
-      paymentId: paymentRow.id,
-      error: paymentUpdateError.message,
-    });
-    return;
-  }
-
-  console.info("[razorpay:webhook] membership activated", {
-    membershipId: membership.id,
-    paymentId: paymentRow.id,
+  // payment.captured — activate the membership, capture the payment, and
+  // issue the invoice atomically.
+  const { data, error } = await admin.rpc("activate_membership_from_payment", {
+    p_payment_id: paymentRow.id,
+    p_razorpay_payment_id: payment.id,
   });
+
+  if (error) {
+    console.error("[razorpay:webhook] activate_membership_from_payment failed", {
+      paymentId: paymentRow.id,
+      error: error.message,
+    });
+    return;
+  }
+
+  const result = data?.[0];
+  console.info(
+    result?.already_captured
+      ? "[razorpay:webhook] payment already captured (replayed delivery)"
+      : "[razorpay:webhook] membership activated",
+    {
+      membershipId: result?.membership_id,
+      paymentId: paymentRow.id,
+      invoiceId: result?.invoice_id,
+    }
+  );
 }

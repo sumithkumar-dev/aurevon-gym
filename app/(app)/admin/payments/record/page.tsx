@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requireRole } from "@/lib/auth/guards";
 import { STAFF_ROLES } from "@/lib/permissions/roles";
-import { getMembers } from "@/lib/supabase/queries/members";
+import { getAllMembersForSelect } from "@/lib/supabase/queries/members";
 import { getActivePlans } from "@/lib/supabase/queries/plans";
 import { RecordPaymentForm } from "@/features/admin/payments/record-payment-form";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function RecordPaymentPage() {
   await requireRole(STAFF_ROLES);
   const [members, plans] = await Promise.all([
-    getMembers(),
+    getAllMembersForSelect(),
     getActivePlans(),
   ]);
 

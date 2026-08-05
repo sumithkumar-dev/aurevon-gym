@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Pagination } from "@/components/ui/pagination";
 import { ROUTES } from "@/lib/constants/routes";
 import type { MemberProfile } from "@/lib/supabase/queries/members";
 
 export function MembersTable({
   members,
   search,
+  currentPage,
+  totalPages,
 }: {
   members: MemberProfile[];
   search?: string;
+  currentPage: number;
+  totalPages: number;
 }) {
   return (
     <div className="flex flex-col gap-6">
@@ -28,9 +33,7 @@ export function MembersTable({
       {members.length === 0 ? (
         <div className="border border-border bg-surface p-8 md:p-10">
           <p className="text-sm text-muted">
-            {search
-              ? `No members match "${search}".`
-              : "No members yet."}
+            {search ? `No members match "${search}".` : "No members yet."}
           </p>
         </div>
       ) : (
@@ -66,7 +69,7 @@ export function MembersTable({
                     <span
                       className={
                         member.status === "active"
-                          ? "text-emerald-400"
+                          ? "text-success"
                           : "text-muted"
                       }
                     >
@@ -87,6 +90,13 @@ export function MembersTable({
           </table>
         </div>
       )}
+
+      <Pagination
+        basePath={ROUTES.adminMembers}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        searchParams={{ search }}
+      />
     </div>
   );
 }

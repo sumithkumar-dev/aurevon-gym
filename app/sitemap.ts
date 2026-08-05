@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const baseUrl = "https://www.aurevon.example";
+import { SITE_URL } from "@/lib/constants/site-url";
 
 const routes = [
   "",
@@ -17,7 +16,7 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: `${SITE_URL}${route}`,
     lastModified: new Date(),
   }));
 }

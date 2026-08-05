@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/constants/site-url";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -20,6 +21,6 @@ export default function robots(): MetadataRoute.Robots {
         "/api/",
       ],
     },
-    sitemap: "https://www.aurevon.example/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

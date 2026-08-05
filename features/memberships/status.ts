@@ -13,11 +13,11 @@ export const MEMBERSHIP_STATUS_LABELS: Record<MembershipStatus, string> = {
 };
 
 // Tailwind text-color utility per status, used for the small status
-// indicator on the member dashboard (and, later, the admin dashboard).
+// indicator on the member dashboard and the admin dashboard.
 export const MEMBERSHIP_STATUS_TONE: Record<MembershipStatus, string> = {
-  pending: "text-amber-400",
-  active: "text-emerald-400",
-  frozen: "text-sky-400",
+  pending: "text-warning",
+  active: "text-success",
+  frozen: "text-info",
   cancelled: "text-muted",
   expired: "text-muted",
 };
@@ -32,10 +32,10 @@ export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
 
 export const PAYMENT_STATUS_TONE: Record<PaymentStatus, string> = {
   created: "text-muted",
-  authorized: "text-amber-400",
-  captured: "text-emerald-400",
-  failed: "text-red-400",
-  refunded: "text-sky-400",
+  authorized: "text-warning",
+  captured: "text-success",
+  failed: "text-destructive",
+  refunded: "text-info",
 };
 
 export const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {

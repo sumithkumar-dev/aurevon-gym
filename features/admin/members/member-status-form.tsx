@@ -36,7 +36,7 @@ export function MemberStatusForm({
         {isPending ? "Saving…" : "Update Status"}
       </Button>
       {state?.error && (
-        <p role="alert" className="w-full text-sm text-red-400">
+        <p role="alert" className="w-full text-sm text-destructive">
           {state.error}
         </p>
       )}

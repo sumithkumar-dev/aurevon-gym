@@ -54,7 +54,7 @@ export function PlansTable({ plans }: { plans: Plan[] }) {
               <td className="px-6 py-4">
                 <span
                   className={
-                    plan.is_active ? "text-emerald-400" : "text-muted"
+                    plan.is_active ? "text-success" : "text-muted"
                   }
                 >
                   {plan.is_active ? "Active" : "Inactive"}

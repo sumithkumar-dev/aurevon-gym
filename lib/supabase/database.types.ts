@@ -346,6 +346,35 @@ export interface Database {
         Args: Record<string, never>;
         Returns: UserRole;
       };
+      activate_membership_from_payment: {
+        Args: { p_payment_id: string; p_razorpay_payment_id: string };
+        Returns: {
+          membership_id: string;
+          invoice_id: string | null;
+          already_captured: boolean;
+        }[];
+      };
+      mark_payment_failed: {
+        Args: { p_payment_id: string; p_razorpay_payment_id: string };
+        Returns: { updated: boolean }[];
+      };
+      record_offline_payment: {
+        Args: {
+          p_member_id: string;
+          p_plan_id: string;
+          p_recorded_by: string;
+          p_notes: string | null;
+        };
+        Returns: {
+          membership_id: string;
+          payment_id: string;
+          invoice_id: string;
+        }[];
+      };
+      get_revenue_summary: {
+        Args: Record<string, never>;
+        Returns: { all_time_paise: number; this_month_paise: number }[];
+      };
     };
     Enums: {
       user_role: UserRole;

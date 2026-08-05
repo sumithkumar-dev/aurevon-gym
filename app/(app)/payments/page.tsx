@@ -8,6 +8,7 @@ import {
 } from "@/lib/supabase/queries/invoices";
 import { getActivePlans } from "@/lib/supabase/queries/plans";
 import { PaymentHistory } from "@/features/member/payments/payment-history";
+import { PendingActivationBanner } from "@/features/member/payments/pending-activation-banner";
 import { PlanPicker } from "@/features/payments/checkout/plan-picker";
 
 export const metadata: Metadata = {
@@ -45,13 +46,7 @@ export default async function PaymentsPage({
       </p>
 
       {justPaid && (
-        <div className="mt-8 border border-accent-dim bg-surface p-6">
-          <p className="text-sm text-foreground">
-            Payment received — your membership will activate within a few
-            moments. Refresh this page shortly if it isn&apos;t reflected
-            yet below.
-          </p>
-        </div>
+        <PendingActivationBanner isActive={membership?.status === "active"} />
       )}
 
       {needsPlan && (

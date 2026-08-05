@@ -17,6 +17,14 @@
     --accent: 30 42% 52%;
     --accent-dim: 30 30% 32%;
     --accent-bright: 32 50% 64%;
+    /* Form/status semantics — error, success, warning, and info text
+       throughout the app read from these tokens rather than a raw
+       Tailwind color, same as every other color in this file. */
+    --destructive: 0 91% 71%;
+    --destructive-strong: 0 84% 60%;
+    --success: 158 64% 52%;
+    --warning: 43 96% 56%;
+    --info: 198 93% 60%;
   }
 
   * {

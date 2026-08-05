@@ -16,7 +16,7 @@ export function RecordPaymentForm({
   members,
   plans,
 }: {
-  members: MemberProfile[];
+  members: Pick<MemberProfile, "id" | "full_name" | "email">[];
   plans: Plan[];
 }) {
   const [state, formAction, isPending] = useActionState(
@@ -64,7 +64,7 @@ export function RecordPaymentForm({
       </div>
 
       {state?.error && (
-        <p role="alert" className="text-sm text-red-400">
+        <p role="alert" className="text-sm text-destructive">
           {state.error}
         </p>
       )}

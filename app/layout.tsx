@@ -4,6 +4,7 @@ import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-data";
 import { getLocalBusinessJsonLd } from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/constants/site-url";
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: new URL("https://www.aurevon.example"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: `${siteConfig.name} — Strength Is Built`,
     description: siteConfig.description,

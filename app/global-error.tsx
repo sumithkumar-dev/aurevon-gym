@@ -2,7 +2,6 @@
 
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
@@ -44,12 +43,19 @@ export default function GlobalError({
             >
               Try Again
             </button>
-            <Link
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages --
+                Deliberate plain <a>, not <Link>: this file replaces the
+                entire root layout (including its providers/router
+                context) when something in that layout itself throws, so
+                it must not depend on client-side routing that may be
+                part of what's broken. A full page load is the only
+                navigation guaranteed to work here. */}
+            <a
               href="/"
               className="inline-flex h-12 items-center justify-center border border-border px-8 text-sm uppercase tracking-wide text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
             >
               Back to Home
-            </Link>
+            </a>
           </div>
         </div>
       </body>

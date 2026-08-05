@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/auth/guards";
 import { STAFF_ROLES } from "@/lib/permissions/roles";
 import { getMembers } from "@/lib/supabase/queries/members";
 import { MembersTable } from "@/features/admin/members/members-table";
+import { ADMIN_PAGE_SIZE, parsePageParam } from "@/lib/constants/pagination";
 
 export const metadata: Metadata = {
   title: "Members",
@@ -11,11 +12,13 @@ export const metadata: Metadata = {
 export default async function AdminMembersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string }>;
+  searchParams: Promise<{ search?: string; page?: string }>;
 }) {
   await requireRole(STAFF_ROLES);
-  const { search } = await searchParams;
-  const members = await getMembers(search);
+  const { search, page: pageParam } = await searchParams;
+  const page = parsePageParam(pageParam);
+  const { members, totalCount } = await getMembers(search, page);
+  const totalPages = Math.max(1, Math.ceil(totalCount / ADMIN_PAGE_SIZE));
 
   return (
     <div className="container-editorial py-16">
@@ -29,7 +32,12 @@ export default async function AdminMembersPage({
       </p>
 
       <div className="mt-10">
-        <MembersTable members={members} search={search} />
+        <MembersTable
+          members={members}
+          search={search}
+          currentPage={page}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

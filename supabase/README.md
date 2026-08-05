@@ -30,6 +30,8 @@ npx supabase gen types typescript --project-id <project-id> --schema public > li
 | `20260802000006_invoices.sql` | Table, sequential invoice numbering, RLS |
 | `20260802000007_announcements.sql` | Table, publish/draft visibility, RLS |
 | `20260802000008_gallery_and_trainers.sql` | Content tables prepared for a future admin content editor, RLS |
+| `20260805000001_payment_atomicity_and_invoices.sql` | Audit fix — `activate_membership_from_payment()`, `mark_payment_failed()`, `record_offline_payment()`: SECURITY DEFINER RPCs that make the webhook and offline-payment write paths transactional and generate the invoice row that was previously never created |
+| `20260805000002_revenue_summary_rpc.sql` | Audit fix — `get_revenue_summary()`: aggregates all-time/this-month revenue in SQL instead of the admin overview fetching every captured payment row |
 
 Every table has RLS enabled. Every migration in this folder has been applied
 and exercised against a local Postgres instance stubbed with Supabase's

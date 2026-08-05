@@ -20,6 +20,13 @@ const config: Config = {
           dim: "hsl(var(--accent-dim))",
           bright: "hsl(var(--accent-bright))",
         },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          strong: "hsl(var(--destructive-strong))",
+        },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        info: "hsl(var(--info))",
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],
