@@ -2,6 +2,7 @@
 
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
@@ -43,12 +44,12 @@ export default function GlobalError({
             >
               Try Again
             </button>
-            <a
+            <Link
               href="/"
               className="inline-flex h-12 items-center justify-center border border-border px-8 text-sm uppercase tracking-wide text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </body>
