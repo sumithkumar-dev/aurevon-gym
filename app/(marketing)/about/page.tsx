@@ -10,7 +10,7 @@ import { spaceImages } from "@/lib/site-images";
 export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
-    "The story behind Aurevon Studios — why we built a training space around standards instead of scale.",
+    "The story behind Aurevon Studios – why we built a training space around standards instead of scale.",
 });
 
 export default function AboutPage() {
@@ -45,7 +45,7 @@ export default function AboutPage() {
             <p className="mt-6 text-base leading-relaxed text-muted">
               After a decade coaching competitive strength athletes, our
               founder set out to build the studio that had always been
-              missing — one where the standard for coaching, equipment, and
+              missing – one where the standard for coaching, equipment, and
               programming never slips, no matter how many members walk
               through the door.
             </p>

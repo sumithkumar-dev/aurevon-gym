@@ -65,7 +65,7 @@ export function PaymentHistory({
                   {formatDate(payment.created_at)}
                 </td>
                 <td className="px-6 py-4 text-foreground">
-                  {payment.plan?.name ?? "—"}
+                  {payment.plan?.name ?? "–"}
                 </td>
                 <td className="px-6 py-4 text-foreground">
                   {formatCurrency(payment.amount_paise)}
@@ -95,7 +95,7 @@ export function PaymentHistory({
                       </span>
                     )
                   ) : (
-                    <span className="text-muted">—</span>
+                    <span className="text-muted">–</span>
                   )}
                 </td>
               </tr>

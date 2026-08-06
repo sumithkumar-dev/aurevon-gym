@@ -16,8 +16,8 @@ const DAYS_OF_WEEK = [
  * into an explicit list of day names.
  */
 function parseDays(days: string): string[] {
-  if (days.includes("—")) {
-    const [start = "", end = ""] = days.split("—").map((s) => s.trim());
+  if (days.includes("–")) {
+    const [start = "", end = ""] = days.split("–").map((s) => s.trim());
     const startIndex = DAYS_OF_WEEK.indexOf(start);
     const endIndex = DAYS_OF_WEEK.indexOf(end);
     if (startIndex !== -1 && endIndex !== -1 && startIndex <= endIndex) {
@@ -42,7 +42,7 @@ function to24Hour(time: string): string {
 }
 
 function parseTimeRange(time: string): { opens: string; closes: string } {
-  const [start = "", end = ""] = time.split("—").map((s) => s.trim());
+  const [start = "", end = ""] = time.split("–").map((s) => s.trim());
   return { opens: to24Hour(start), closes: to24Hour(end) };
 }
 

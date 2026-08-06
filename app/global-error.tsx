@@ -32,7 +32,7 @@ export default function GlobalError({
             Something went wrong.
           </h1>
           <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
-            The studio site hit an unexpected error. Try reloading — if this
+            The studio site hit an unexpected error. Try reloading – if this
             keeps happening, reach out and we&rsquo;ll take a look.
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">

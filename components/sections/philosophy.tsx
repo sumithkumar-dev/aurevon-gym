@@ -30,7 +30,7 @@ export function Philosophy() {
           </Reveal>
           <Reveal delay={200}>
             <p className="text-base md:text-lg leading-relaxed text-muted">
-              So we built the studio we wanted to train in — considered
+              So we built the studio we wanted to train in – considered
               programming, a small coaching roster held to a real standard,
               and a room with nothing in it that doesn&rsquo;t earn its place. No
               gimmicks. No noise. Just the work, done properly, for as long

@@ -24,7 +24,7 @@ export default function Error({
         Something went wrong.
       </h1>
       <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
-        We hit an unexpected error loading this page. It&rsquo;s on us — try
+        We hit an unexpected error loading this page. It&rsquo;s on us – try
         again, or head back home.
       </p>
       <div className="mt-10 flex flex-col gap-4 sm:flex-row">

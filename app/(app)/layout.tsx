@@ -5,6 +5,7 @@ import { signOutAction } from "@/features/auth/sign-out/actions";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-data";
 import { ROLE_LABELS } from "@/lib/permissions/roles";
+import { AppNav } from "@/components/layout/app-nav";
 
 export default async function AppLayout({
   children,
@@ -19,7 +20,7 @@ export default async function AppLayout({
         <div className="container-editorial flex h-20 items-center justify-between">
           <Link
             href="/"
-            className="font-display text-lg uppercase tracking-widest2 text-foreground"
+            className="font-display text-xl md:text-2xl uppercase tracking-widest2 text-foreground"
           >
             {siteConfig.name}
           </Link>
@@ -41,6 +42,12 @@ export default async function AppLayout({
           )}
         </div>
       </header>
+
+      {/* Persistent section tabs — this is what lets someone get from,
+          say, /admin/members/[id] back to the Members list (or over to
+          Plans/Payments) without relying on the browser's Back button,
+          which previously was the only way to navigate the portal. */}
+      {profile && <AppNav role={profile.role} />}
 
       <main id="main-content" className="flex-1">
         {children}

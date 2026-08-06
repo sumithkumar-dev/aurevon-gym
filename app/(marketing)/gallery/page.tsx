@@ -12,15 +12,23 @@ export const metadata: Metadata = pageMetadata({
   description: "A look inside Aurevon Studios.",
 });
 
-const galleryItems: { image: SiteImage; ratio: "square" | "portrait" | "landscape" | "wide" }[] = [
+const galleryItems: {
+  image: SiteImage;
+  ratio: "square" | "portrait" | "landscape" | "wide";
+  // Every source photo here is a wide ~16:9 capture, so a square/portrait
+  // frame always crops it — object-position points that crop at the
+  // photo's actual subject instead of a default center crop, which for
+  // these two was cutting off the framed detail / the person entirely.
+  objectPosition?: string;
+}[] = [
   { image: spaceImages.mainFloor, ratio: "wide" },
   { image: spaceImages.freeWeights, ratio: "portrait" },
   { image: spaceImages.coachingSession, ratio: "square" },
   { image: spaceImages.conditioningBay, ratio: "landscape" },
   { image: spaceImages.recoverySuite, ratio: "portrait" },
-  { image: spaceImages.detailedEquipment, ratio: "square" },
+  { image: spaceImages.detailedEquipment, ratio: "square", objectPosition: "80% center" },
   { image: spaceImages.gymEntrance, ratio: "landscape" },
-  { image: spaceImages.memberTraining, ratio: "portrait" },
+  { image: spaceImages.memberTraining, ratio: "portrait", objectPosition: "25% center" },
 ];
 
 const ratioClasses: Record<(typeof galleryItems)[number]["ratio"], string> = {
@@ -55,6 +63,7 @@ export default function GalleryPage() {
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover"
+                  style={item.objectPosition ? { objectPosition: item.objectPosition } : undefined}
                 />
               </div>
             </Reveal>

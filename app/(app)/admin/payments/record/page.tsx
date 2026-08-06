@@ -4,6 +4,8 @@ import { STAFF_ROLES } from "@/lib/permissions/roles";
 import { getAllMembersForSelect } from "@/lib/supabase/queries/members";
 import { getActivePlans } from "@/lib/supabase/queries/plans";
 import { RecordPaymentForm } from "@/features/admin/payments/record-payment-form";
+import { BackLink } from "@/components/ui/back-link";
+import { ROUTES } from "@/lib/constants/routes";
 
 export const metadata: Metadata = {
   title: "Record Payment",
@@ -18,7 +20,8 @@ export default async function RecordPaymentPage() {
 
   return (
     <div className="container-editorial py-16">
-      <p className="eyebrow mb-4">Admin Dashboard</p>
+      <BackLink href={ROUTES.adminPayments} label="Back to Payments" />
+      <p className="eyebrow mb-4 mt-6">Admin Dashboard</p>
       <h1 className="font-display text-display-2 uppercase text-foreground">
         Record Payment
       </h1>

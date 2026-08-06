@@ -20,9 +20,9 @@ export const siteConfig = {
     city: "Telangana, 506002",
   },
   hours: [
-    { days: "Monday — Friday", time: "5:00 AM — 11:00 PM" },
-    { days: "Saturday", time: "6:00 AM — 9:00 PM" },
-    { days: "Sunday", time: "7:00 AM — 6:00 PM" },
+    { days: "Monday – Friday", time: "5:00 AM – 11:00 PM" },
+    { days: "Saturday", time: "6:00 AM – 9:00 PM" },
+    { days: "Sunday", time: "7:00 AM – 6:00 PM" },
   ],
   mapEmbedSrc:
     "https://www.google.com/maps?q=Hanamkonda,Telangana,India&output=embed",
@@ -159,7 +159,7 @@ export const faqs = [
   {
     question: "Can I freeze or cancel my membership?",
     answer:
-      "Yes. All memberships can be frozen for up to two months per year and cancelled with 30 days' notice — no long-term contracts, no cancellation fees.",
+      "Yes. All memberships can be frozen for up to two months per year and cancelled with 30 days' notice – no long-term contracts, no cancellation fees.",
   },
   {
     question: "What's included in a personal training session?",
@@ -169,7 +169,7 @@ export const faqs = [
   {
     question: "Is there a joining fee?",
     answer:
-      "A one-time studio orientation fee applies to all new memberships. It covers your initial assessment and programming setup — full pricing is confirmed at signup.",
+      "A one-time studio orientation fee applies to all new memberships. It covers your initial assessment and programming setup – full pricing is confirmed at signup.",
   },
   {
     question: "Do you offer day passes for visitors?",

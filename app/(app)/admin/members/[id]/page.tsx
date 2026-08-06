@@ -10,6 +10,8 @@ import {
   type Invoice,
 } from "@/lib/supabase/queries/invoices";
 import { MemberDetail } from "@/features/admin/members/member-detail";
+import { BackLink } from "@/components/ui/back-link";
+import { ROUTES } from "@/lib/constants/routes";
 
 export const metadata: Metadata = {
   title: "Member Detail",
@@ -40,7 +42,8 @@ export default async function AdminMemberDetailPage({
 
   return (
     <div className="container-editorial py-16">
-      <p className="eyebrow mb-4">Admin Dashboard — Members</p>
+      <BackLink href={ROUTES.adminMembers} label="Back to Members" />
+      <p className="eyebrow mb-4 mt-6">Admin Dashboard – Members</p>
       <h1 className="font-display text-display-2 uppercase text-foreground">
         {member.full_name || "Member"}
       </h1>

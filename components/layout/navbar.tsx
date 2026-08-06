@@ -3,12 +3,19 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, CircleUserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mainNav, siteConfig } from "@/lib/site-data";
 import { Button } from "@/components/ui/button";
+import { roleHomeRoute } from "@/lib/constants/routes";
+import { ROLE_LABELS, type Role } from "@/lib/permissions/roles";
 
-export function Navbar() {
+export type NavbarProfile = {
+  role: Role;
+  full_name: string;
+} | null;
+
+export function Navbar({ profile }: { profile: NavbarProfile }) {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
@@ -24,6 +31,11 @@ export function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  const accountHref = profile ? roleHomeRoute(profile.role) : "/login";
+  const accountLabel = profile
+    ? profile.full_name || ROLE_LABELS[profile.role]
+    : "Sign In";
+
   return (
     <header
       className={cn(
@@ -35,7 +47,7 @@ export function Navbar() {
         <Link
           href="/"
           className="font-display text-xl md:text-2xl uppercase tracking-widest2 shrink-0 transition-colors duration-300 hover:text-accent active:text-accent-bright"
-          aria-label={`${siteConfig.name} — home`}
+          aria-label={`${siteConfig.name} – home`}
         >
           {siteConfig.name}
         </Link>
@@ -64,17 +76,22 @@ export function Navbar() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
           <Link
-            href="/login"
+            href={accountHref}
             className={cn(
-              "text-sm uppercase tracking-wide transition-colors duration-300 hover:text-accent active:text-accent-bright",
-              pathname === "/login" ? "text-accent" : "text-foreground/85"
+              "flex items-center gap-2 text-sm uppercase tracking-wide transition-colors duration-300 hover:text-accent active:text-accent-bright",
+              pathname === accountHref ? "text-accent" : "text-foreground/85"
             )}
           >
-            Sign In
+            {profile && (
+              <CircleUserRound className="h-4 w-4" aria-hidden="true" />
+            )}
+            {accountLabel}
           </Link>
-          <Button variant="primary" size="default" asChild>
-            <Link href="/membership">Join Now</Link>
-          </Button>
+          {!profile && (
+            <Button variant="primary" size="default" asChild>
+              <Link href="/membership">Join Now</Link>
+            </Button>
+          )}
         </div>
 
         <button
@@ -138,14 +155,19 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <Button variant="primary" className="mt-8 w-full" asChild>
-              <Link href="/membership">Join Now</Link>
-            </Button>
+            {!profile && (
+              <Button variant="primary" className="mt-8 w-full" asChild>
+                <Link href="/membership">Join Now</Link>
+              </Button>
+            )}
             <Link
-              href="/login"
-              className="mt-6 block text-center text-sm uppercase tracking-wide text-foreground/85 transition-colors duration-200 hover:text-accent active:text-accent-bright min-h-[44px] flex items-center justify-center"
+              href={accountHref}
+              className="mt-6 flex items-center justify-center gap-2 text-center text-sm uppercase tracking-wide text-foreground/85 transition-colors duration-200 hover:text-accent active:text-accent-bright min-h-[44px]"
             >
-              Sign In
+              {profile && (
+                <CircleUserRound className="h-4 w-4" aria-hidden="true" />
+              )}
+              {accountLabel}
             </Link>
           </nav>
         </div>

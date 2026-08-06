@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 
 export const metadata: Metadata = pageMetadata({
   title: "Facilities",
-  description: "Inside Aurevon Studios — the free-weight floor, conditioning bay, and recovery suite.",
+  description: "Inside Aurevon Studios – the free-weight floor, conditioning bay, and recovery suite.",
 });
 
 export default function FacilitiesPage() {
@@ -16,7 +16,7 @@ export default function FacilitiesPage() {
       <PageHeader
         eyebrow="Facilities"
         title="Twelve thousand square feet, no wasted space."
-        description="Three floors, each built for a single purpose: strength, conditioning, and recovery — kept separate so each one works properly."
+        description="Three floors, each built for a single purpose: strength, conditioning, and recovery – kept separate so each one works properly."
       />
 
       <TheSpace />
@@ -32,7 +32,7 @@ export default function FacilitiesPage() {
           {[
             "Competition powerlifting platforms",
             "Full Olympic weightlifting setup",
-            "Specialty bars — safety squat, trap, cambered",
+            "Specialty bars – safety squat, trap, cambered",
             "Selectorized machine range",
             "Dedicated conditioning equipment",
             "Cold plunge & sauna recovery suite",

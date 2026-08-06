@@ -34,7 +34,7 @@ export function MembershipStatusCard({
         </h2>
         <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
           You don&apos;t have a membership on file yet. Once a payment is
-          confirmed — online or at the front desk — it will appear here.
+          confirmed – online or at the front desk – it will appear here.
         </p>
         {showChoosePlanCta && (
           <Button asChild variant="outline" className="mt-8">

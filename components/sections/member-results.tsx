@@ -24,7 +24,12 @@ export function MemberResults() {
             delay={i * 90}
             className={i === 1 ? "lg:mt-12" : undefined}
           >
-            <div className="relative aspect-[3/4] w-full overflow-hidden border border-border">
+            {/* These are before/after split-panel composites, not single
+                shots — a 3:4 portrait crop was cutting each one down to a
+                strip that mixed the left panel with the right panel
+                instead of showing either side-by-side comparison intact.
+                16:9 matches the source and keeps both halves whole. */}
+            <div className="relative aspect-[16/9] w-full overflow-hidden border border-border">
               <Image
                 src={t.image.src}
                 alt={t.image.alt}
@@ -37,7 +42,7 @@ export function MemberResults() {
               &ldquo;{t.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-4 text-xs uppercase tracking-wide text-muted">
-              {t.name} <span className="text-accent">— {t.detail}</span>
+              {t.name} <span className="text-accent">– {t.detail}</span>
             </figcaption>
           </Reveal>
         ))}

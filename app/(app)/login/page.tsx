@@ -25,7 +25,7 @@ export default async function LoginPage({
     <AuthCard
       eyebrow="Studio Access"
       title="Sign In"
-      description="Members and staff both sign in here — you'll land in the right place for your account."
+      description="Members and staff both sign in here – you'll land in the right place for your account."
     >
       <LoginForm redirectTo={redirectTo} />
     </AuthCard>

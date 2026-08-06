@@ -27,7 +27,7 @@ export function MemberDetail({
       <div className="border border-border bg-surface p-8 md:p-10">
         <p className="eyebrow mb-3">Member</p>
         <h2 className="font-display text-2xl uppercase text-foreground">
-          {member.full_name || "—"}
+          {member.full_name || "–"}
         </h2>
 
         <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -42,7 +42,7 @@ export function MemberDetail({
               Phone
             </dt>
             <dd className="mt-1 text-sm text-foreground">
-              {member.phone || "—"}
+              {member.phone || "–"}
             </dd>
           </div>
           <div>

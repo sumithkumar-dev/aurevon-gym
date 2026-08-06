@@ -58,7 +58,7 @@ export default async function MembershipPage() {
             },
             {
               title: "Upgrade anytime",
-              body: "Move between tiers whenever your training needs change — changes apply from your next billing cycle.",
+              body: "Move between tiers whenever your training needs change – changes apply from your next billing cycle.",
             },
             {
               title: "Freeze when you travel",

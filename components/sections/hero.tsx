@@ -20,7 +20,7 @@ export function Hero() {
 
       <div className="container-editorial relative z-10 pb-20 pt-40 md:pb-28">
         <p className="eyebrow mb-6 animate-fade-up [animation-delay:0.1s] opacity-0">
-          Aurevon Studios — Private Training
+          Aurevon Studios – Private Training
         </p>
 
         <h1 className="font-display text-hero uppercase text-balance animate-fade-up [animation-delay:0.2s] opacity-0">
@@ -32,7 +32,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <p className="max-w-md text-base md:text-lg text-muted leading-relaxed animate-fade-up [animation-delay:0.35s] opacity-0">
             Not a class. Not a franchise. A single, considered space for
-            training that&rsquo;s coached, measured, and built around you —
+            training that&rsquo;s coached, measured, and built around you –
             one member at a time.
           </p>
 

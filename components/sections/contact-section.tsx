@@ -11,7 +11,7 @@ export function ContactSection() {
         <SectionHeading
           eyebrow="Visit The Studio"
           title="Come see the space."
-          description="Book a walkthrough, ask about membership, or just say hello — we respond to every message personally."
+          description="Book a walkthrough, ask about membership, or just say hello – we respond to every message personally."
         />
       </Reveal>
 
@@ -24,7 +24,7 @@ export function ContactSection() {
           <div className="relative aspect-[4/3] w-full overflow-hidden border border-border">
             <iframe
               src={siteConfig.mapEmbedSrc}
-              title="Aurevon Studios location — Hanamkonda, Telangana"
+              title="Aurevon Studios location – Hanamkonda, Telangana"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 h-full w-full border-0"

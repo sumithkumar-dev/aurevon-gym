@@ -63,10 +63,10 @@ export function PaymentsTable({
                   {formatDate(payment.created_at)}
                 </td>
                 <td className="px-6 py-4 text-foreground">
-                  {payment.member?.full_name || payment.member?.email || "—"}
+                  {payment.member?.full_name || payment.member?.email || "–"}
                 </td>
                 <td className="px-6 py-4 text-foreground">
-                  {payment.plan?.name ?? "—"}
+                  {payment.plan?.name ?? "–"}
                 </td>
                 <td className="px-6 py-4 text-foreground">
                   {formatCurrency(payment.amount_paise)}

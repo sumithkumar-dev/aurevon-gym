@@ -34,7 +34,7 @@ export function RecordPaymentForm({
           </option>
           {members.map((member) => (
             <option key={member.id} value={member.id}>
-              {member.full_name || member.email} — {member.email}
+              {member.full_name || member.email} – {member.email}
             </option>
           ))}
         </Select>
@@ -48,7 +48,7 @@ export function RecordPaymentForm({
           </option>
           {plans.map((plan) => (
             <option key={plan.id} value={plan.id}>
-              {plan.name} — {formatCurrency(plan.price_paise)}
+              {plan.name} – {formatCurrency(plan.price_paise)}
             </option>
           ))}
         </Select>

@@ -22,13 +22,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — Strength Is Built`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.name} – Strength Is Built`,
+    template: `%s – ${siteConfig.name}`,
   },
   description: siteConfig.description,
   metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: `${siteConfig.name} — Strength Is Built`,
+    title: `${siteConfig.name} – Strength Is Built`,
     description: siteConfig.description,
     type: "website",
   },

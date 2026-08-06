@@ -44,7 +44,7 @@ export function PendingActivationBanner({ isActive }: { isActive: boolean }) {
     return (
       <div className="mt-8 border border-success/40 bg-surface p-6">
         <p role="status" className="text-sm text-foreground">
-          Membership activated — you&apos;re all set.
+          Membership activated – you&apos;re all set.
         </p>
       </div>
     );
@@ -54,8 +54,8 @@ export function PendingActivationBanner({ isActive }: { isActive: boolean }) {
     <div className="mt-8 border border-accent-dim bg-surface p-6">
       <p role="status" aria-live="polite" className="text-sm text-foreground">
         {gaveUp
-          ? "Still confirming your payment — this can occasionally take a few minutes. Your membership will activate automatically once it's confirmed; refresh this page any time to check."
-          : "Payment received — activating your membership…"}
+          ? "Still confirming your payment – this can occasionally take a few minutes. Your membership will activate automatically once it's confirmed; refresh this page any time to check."
+          : "Payment received – activating your membership…"}
       </p>
     </div>
   );

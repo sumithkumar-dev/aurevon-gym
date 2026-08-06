@@ -57,7 +57,7 @@ export function formatCurrency(amountPaise: number): string {
  * an em dash for `null` (e.g. a membership that hasn't started yet). */
 export function formatDate(value: string | null): string {
   if (!value) {
-    return "—";
+    return "–";
   }
   return new Intl.DateTimeFormat("en-IN", { dateStyle: "medium" }).format(
     new Date(value)

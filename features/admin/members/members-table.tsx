@@ -62,7 +62,7 @@ export function MembersTable({
                   className="border-b border-border last:border-0"
                 >
                   <td className="px-6 py-4 text-foreground">
-                    {member.full_name || "—"}
+                    {member.full_name || "–"}
                   </td>
                   <td className="px-6 py-4 text-muted">{member.email}</td>
                   <td className="px-6 py-4">

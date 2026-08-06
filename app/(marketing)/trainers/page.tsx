@@ -19,7 +19,7 @@ export default function TrainersPage() {
       <PageHeader
         eyebrow="The Coaching Staff"
         title="A small roster, on purpose."
-        description="We limit our coaching staff so every coach can carry a caseload they actually know — every member, every session, every number."
+        description="We limit our coaching staff so every coach can carry a caseload they actually know – every member, every session, every number."
       />
 
       <Section className="pt-0">

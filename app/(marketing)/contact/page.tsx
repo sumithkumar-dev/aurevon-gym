@@ -5,7 +5,7 @@ import { ContactSection } from "@/components/sections/contact-section";
 
 export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: "Get in touch with Aurevon Studios — visit, call, or send a message.",
+  description: "Get in touch with Aurevon Studios – visit, call, or send a message.",
 });
 
 export default function ContactPage() {
